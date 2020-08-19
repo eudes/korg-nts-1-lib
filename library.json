@@ -1,0 +1,8 @@
+{
+    "name": "lib-korg-nts-1",
+    "version": "1.0.0",
+    "description": "nts-1-customizations",
+    "keywords": "nts1",
+    "platforms": ["ststm32", "espressif32"],
+    "frameworks": ["arduino", "espidf"]
+}
