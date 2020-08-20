@@ -113,6 +113,14 @@ nts1_status_t s_spi_teardown()
     return k_nts1_status_ok;
 }
 
+nts1_status_t nts1_teardown()
+{
+  nts1_status_t res = s_spi_teardown();
+
+  return res;
+}
+
+
 void s_ack_init()
 {
     // Configuration for the handshake line
