@@ -20,7 +20,6 @@
 
 #define SPI_MODE 3
 #define SPI_BITORDER SPI_SLAVE_BIT_LSBFIRST
-//#define SPI_BITORDER SPI_SLAVE_RXBIT_LSBFIRST
 
 #define S_SPI_HOST VSPI_HOST // Use the SPI3 device
 #define DMA_CHANNEL 0        // disable dma, use direct spi buffer
@@ -109,6 +108,7 @@ nts1_status_t s_spi_init()
 
 nts1_status_t s_spi_teardown()
 {
+    printf("tearing down spi\n");
     spi_slave_free(S_SPI_HOST);
     return k_nts1_status_ok;
 }
@@ -217,6 +217,7 @@ nts1_status_t nts1_idle()
         // zero out the values; note that rx_buf_ptr points to 32 bits, not 8
         *rx_buf_ptr = 0;
         transaction.rx_buffer = (void *)rx_buf_ptr;
+        printf("spi rx %p", rx_buf_ptr);
 
         // We always need to increase both counters by the length of the
         // transaction because the transaction will always read and write
@@ -232,7 +233,11 @@ nts1_status_t nts1_idle()
             }
         }
 
-        spi_slave_queue_trans(S_SPI_HOST, &transaction, SPI_QUEUE_TTW);
+        esp_err_t err = spi_slave_queue_trans(S_SPI_HOST, &transaction, SPI_QUEUE_TTW);
+        if(err){
+            // spi  0x3ffb2470
+            // buff 0x3ffb270c
+        }
     }
 
     if (ready_transactions)
