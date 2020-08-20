@@ -213,7 +213,11 @@ nts1_status_t nts1_idle()
             SPI_RX_BUF_RESET();
         }
         // Point the the transaction's Rx buffer to the current Rx write idx
-        uint32_t *rx_buf_ptr = s_spi_rx_buf + s_spi_rx_widx;
+        // It's important to do the casting to the result of the arithmetic,
+        // if you leave the second parenthesis out, s_spi_rx_buf is converted
+        // to a 32 bit pointer first, and then added s_spi_rx_widx positions
+        // which results in writing beyond the buffer
+        uint32_t *rx_buf_ptr = (uint32_t *) (s_spi_rx_buf + s_spi_rx_widx);
         // zero out the values; note that rx_buf_ptr points to 32 bits, not 8
         *rx_buf_ptr = 0;
         transaction.rx_buffer = (void *)rx_buf_ptr;
