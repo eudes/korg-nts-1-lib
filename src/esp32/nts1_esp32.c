@@ -206,18 +206,17 @@ nts1_status_t nts1_idle()
         // from the software Tx buffer
         transaction.tx_buffer = (void *)tx_buf_ptr_first_byte;
 
-        if (!s_spi_chk_rx_buf_space(SPI_TRANSACTION_BYTES))
+        if (!s_spi_chk_rx_buf_space(SPI_TRANSACTION_BITS))
         {
             // printf("resetting rx\n");
             // If there's no space for the full transaction, reset the buffer
             SPI_RX_BUF_RESET();
         }
         // Point the the transaction's Rx buffer to the current Rx write idx
-        uint32_t *rx_buf_ptr = (uint32_t *) s_spi_rx_buf + s_spi_rx_widx;
+        uint32_t *rx_buf_ptr = s_spi_rx_buf + s_spi_rx_widx;
         // zero out the values; note that rx_buf_ptr points to 32 bits, not 8
         *rx_buf_ptr = 0;
         transaction.rx_buffer = (void *)rx_buf_ptr;
-        printf("spi rx %p", rx_buf_ptr);
 
         // We always need to increase both counters by the length of the
         // transaction because the transaction will always read and write

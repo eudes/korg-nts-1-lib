@@ -261,7 +261,7 @@ void s_rx_msg_handler(uint8_t data)
     // 1x111 100
   case k_rx_cmd_event:
   {
-    printf("received cmd_event\n");
+    // printf("received cmd_event\n");
 
     // this will push stuff into the array
     // for future use
@@ -343,7 +343,7 @@ void s_rx_msg_handler(uint8_t data)
   // 1x111 101
   case k_rx_cmd_param:
   {
-    printf("received cmd_param\n");
+    // printf("received cmd_param\n");
 
     s_panel_rx_data[s_panel_rx_data_cnt++] = data;
 
@@ -457,7 +457,7 @@ void s_rx_msg_handler(uint8_t data)
   } // end case k_rx_cmd_other:
   // 1x111 111
   case k_rx_cmd_dummy:
-    printf("received dummy\n");
+    // printf("received dummy\n");
     // continues to default
   default:
     // resets
