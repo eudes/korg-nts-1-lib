@@ -397,6 +397,7 @@ void s_rx_msg_handler(uint8_t data)
     switch (s_panel_rx_data[1])
     {
     case k_rx_subcmd_other_panelid: // Panel ID specified ("ppp" is left here but not here)
+      printf("received cmd_other: panelid\n");
       /*++++++++++++++++++++++++++++++++++++++++++++++
           CMD6-0 :PanelID designation.
           Only in this case, specify ppp=7.
@@ -413,6 +414,7 @@ void s_rx_msg_handler(uint8_t data)
         s_tx_cmd_other_version(false);
         // Send All SW Pattern to HOST
         s_tx_cmd_other_bootmode(true);
+        printf("received cmd_other: panelid: %x\n", s_panel_id);
       }
       // Reset rx status
       s_panel_rx_status = 0;
@@ -420,6 +422,7 @@ void s_rx_msg_handler(uint8_t data)
       break;
 
     case k_rx_subcmd_other_stsreq:
+    printf("received cmd_other: stsreq\n");
       /*++++++++++++++++++++++++++++++++++++++++++++++
           CMD6-1 :Status Request
           Request to send the current SwitchPattern (CMD6-17) and all knob commands.
@@ -434,6 +437,7 @@ void s_rx_msg_handler(uint8_t data)
       break;
 
     case k_rx_subcmd_other_ackreq: // Panel ACK req
+    printf("received cmd_other: ackreq\n");
       /*++++++++++++++++++++++++++++++++++++++++++++++
           CMD6-3 :ACK request
           For checking whether the Panel is operating normally.
@@ -449,6 +453,8 @@ void s_rx_msg_handler(uint8_t data)
       break;
 
     default:
+      printf("received cmd_other: default\n");
+
       // Undefined command - ignore and reset
       s_panel_rx_status = 0;
       s_panel_rx_data_cnt = 0;
