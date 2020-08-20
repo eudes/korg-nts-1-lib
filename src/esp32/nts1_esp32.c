@@ -63,10 +63,6 @@ void s_spi_irq_handler_post_transaction(spi_slave_transaction_t *trans)
 
 nts1_status_t s_spi_init()
 {
-    // DMA interrupts:
-    // SPI_IN_DONE_INT
-    // SPI_OUT_DONE_INT
-
     //Configuration for the SPI bus
     spi_bus_config_t buscfg = {
         .mosi_io_num = SPI_MOSI_PIN,
